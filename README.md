@@ -9,7 +9,9 @@ Packer post-processor.
 
 ## Installation
 
-TODO
+Go to https://github.com/Jalle19/vagrant-registry-generator/releases/latest, right-click the 
+`vagrant-registry-generator.phar` link, copy the URL and then run `wget <url>`. You can now run the tool using 
+`php vagrant-registry-generator.phar`.
 
 ## Requirements
 

@@ -1,0 +1,22 @@
+{
+    "name": "jalle19/vagrant-registry-generator",
+    "description": "Static Vagrant registry generator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sam Stenvall",
+            "email": "sam.stenvall@nordsoftware.com"
+        }
+    ],
+    "require": {
+        "jalle19/single-command-application": "^1.0",
+        "league/flysystem": "^1.0",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "league/plates": "^3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jalle19\\VagrantRegistryGenerator\\": "src/"
+        }
+    }
+}

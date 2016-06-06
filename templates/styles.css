@@ -1,0 +1,24 @@
+body {
+    font-family: serif;
+}
+
+.header {
+    border-bottom: 1px solid darkgray;
+}
+
+.footer {
+    border-top: 1px solid darkgray;
+    padding-top: 1em;
+    font-size: small;
+}
+
+pre.vagrantFile {
+    display: inline-block;
+    padding: 1em;
+    background-color: lightgray;
+}
+
+div.fileMetadata span {
+    display: inline-block;
+    padding-right: 1em;
+}

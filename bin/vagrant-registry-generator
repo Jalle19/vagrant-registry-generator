@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+require_once(__DIR__.'/../vendor/autoload.php');
+
+use Jalle19\SingleCommandApplication\SingleCommandApplication;
+use Jalle19\VagrantRegistryGenerator\VagrantRegistryGenerator;
+
+$application = new SingleCommandApplication(VagrantRegistryGenerator::COMMAND_NAME, VagrantRegistryGenerator::class);
+$application->run();

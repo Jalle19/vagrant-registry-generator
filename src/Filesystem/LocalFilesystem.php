@@ -4,6 +4,7 @@ namespace Jalle19\VagrantRegistryGenerator\Filesystem;
 
 use Jalle19\VagrantRegistryGenerator\Configuration\Configuration;
 use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem as Flysystem;
 
 /**
  * Class LocalFilesystem
@@ -19,7 +20,7 @@ class LocalFilesystem extends Filesystem
     {
         parent::__construct($configuration);
 
-        $this->filesystem = new \League\Flysystem\Filesystem(new Local($this->configuration->getOutputPath()));
+        $this->filesystem = new Flysystem(new Local($this->configuration->getOutputPath()));
     }
 
 }

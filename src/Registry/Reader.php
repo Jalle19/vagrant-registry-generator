@@ -32,6 +32,8 @@ class Reader
      *
      * @param Configuration $configuration
      * @param Filesystem    $filesystem
+     * 
+     * @throws InvalidConfigurationException
      */
     public function __construct(Configuration $configuration, Filesystem $filesystem)
     {

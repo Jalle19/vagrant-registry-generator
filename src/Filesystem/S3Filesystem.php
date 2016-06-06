@@ -5,6 +5,7 @@ namespace Jalle19\VagrantRegistryGenerator\Filesystem;
 use Aws\S3\S3Client;
 use Jalle19\VagrantRegistryGenerator\Configuration\Configuration;
 use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use League\Flysystem\Filesystem as Flysystem;
 
 /**
  * Class S3Filesystem
@@ -49,7 +50,7 @@ class S3Filesystem extends RemoteFilesystem
 
         $adapter = new AwsS3Adapter($client, $bucket, $prefix);
 
-        $this->filesystem = new \League\Flysystem\Filesystem($adapter);
+        $this->filesystem = new Flysystem($adapter);
     }
 
 

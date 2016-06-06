@@ -11,6 +11,7 @@ class Parser
 
     /**
      * @param string $manifestJson
+     * @param string $manifestUrl
      *
      * @return Manifest
      */

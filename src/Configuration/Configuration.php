@@ -37,16 +37,6 @@ class Configuration
      */
     private $awsRegion;
 
-    /**
-     * @var string
-     */
-    private $s3Bucket;
-
-    /**
-     * @var string
-     */
-    private $s3Prefix;
-
 
     /**
      * @return string
@@ -153,50 +143,6 @@ class Configuration
     public function setAwsRegion($awsRegion)
     {
         $this->awsRegion = $awsRegion;
-
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getS3Bucket()
-    {
-        return $this->s3Bucket;
-    }
-
-
-    /**
-     * @param string $s3Bucket
-     *
-     * @return Configuration
-     */
-    public function setS3Bucket($s3Bucket)
-    {
-        $this->s3Bucket = $s3Bucket;
-
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getS3Prefix()
-    {
-        return $this->s3Prefix;
-    }
-
-
-    /**
-     * @param string $s3Prefix
-     *
-     * @return Configuration
-     */
-    public function setS3Prefix($s3Prefix)
-    {
-        $this->s3Prefix = $s3Prefix;
 
         return $this;
     }

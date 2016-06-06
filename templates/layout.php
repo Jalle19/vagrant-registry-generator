@@ -18,7 +18,7 @@
     <?=$this->section('content')?>
 </div>
 <div class="footer">
-    Generated with <a
+    Generated on <?php echo (new \DateTime())->format('c');  ?> with <a
         href="https://github.com/Jalle19/vagrant-registry-generator">Jalle19/vagrant-registry-generator</a>
 </div>
 </body>

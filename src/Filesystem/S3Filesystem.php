@@ -62,7 +62,7 @@ class S3Filesystem extends RemoteFilesystem
         /* @var AwsS3Adapter $adapter */
         $adapter = $this->filesystem->getAdapter();
 
-        return $adapter->getClient()->getObjectUrl($this->bucket, $this->prefix);
+        return $adapter->getClient()->getObjectUrl($this->bucket, $this->prefix . '/' . $path);
     }
 
 }

@@ -45,7 +45,8 @@ class Writer
         $this->configuration = $configuration;
         $this->filesystem    = $filesystem;
 
-        $this->templatePath = realpath(__DIR__ . '/../../templates');
+        // The path is relative to the generated PHAR file
+        $this->templatePath = './templates';
         $this->templates    = new TemplateEngine($this->templatePath);
     }
 

@@ -1,0 +1,23 @@
+{
+  "chmod": "0755",
+  "directories": [
+    "src",
+    "templates"
+  ],
+  "files": [
+    "LICENSE"
+  ],
+  "finder": [
+    {
+      "name": "*.php",
+      "exclude": [
+        "Tests"
+      ],
+      "in": "vendor"
+    }
+  ],
+  "git-version": "package_version",
+  "main": "bin/vagrant-registry-generator",
+  "output": "vagrant-registry-generator.phar",
+  "stub": true
+}

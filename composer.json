@@ -12,7 +12,10 @@
         "jalle19/single-command-application": "^1.0",
         "league/flysystem": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
-        "league/plates": "^3.1"
+        "league/plates": "^3.1",
+        "bramus/monolog-colored-line-formatter": "^2.0",
+        "symfony/monolog-bridge": "^3.1",
+        "symfony/event-dispatcher": "^3.1"
     },
     "autoload": {
         "psr-4": {

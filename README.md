@@ -59,6 +59,26 @@ Help:
 `registryPath` and `outputPath` should be in the form of `s3://bucket/prefix`. You can also store the output locally 
 by passing a local path to `outputPath`, e.g. `./dist`.
 
+To see what the program does, add `-vv` to the end of the command. Here's a sample of the output it produces on a 
+successful run:
+
+```
+[2016-06-06 17:01:48] NOTICE: Fetching manifest files
+[2016-06-06 17:01:49] INFO: Parsing manifest file at json/foo/bar-vagrant.json
+[2016-06-06 17:01:50] INFO: Parsing manifest file at json/foo/baz-vagrant.json
+[2016-06-06 17:01:51] INFO: Parsing manifest file at json/foo/qux-vagrant.json
+[2016-06-06 17:01:51] NOTICE: Attempting to fetch additional file metadata for each box
+[2016-06-06 17:01:52] INFO: Fetching metadata for box at boxes/foo/bar-vagrant/0.1.0/packer_virtualbox-iso_virtualbox.box
+[2016-06-06 17:01:52] INFO: Fetching metadata for box at boxes/foo/bar-vagrant/0.2.0/packer_virtualbox-iso_virtualbox.box
+[2016-06-06 17:01:53] INFO: Fetching metadata for box at boxes/foo/baz-vagrant/0.1.0/packer_virtualbox-iso_virtualbox.box
+[2016-06-06 17:01:53] INFO: Fetching metadata for box at boxes/foo/qux-vagrant/0.1.0/packer_vmware-iso_vmware.box
+[2016-06-06 17:01:54] INFO: Fetching metadata for box at boxes/foo/qux-vagrant/0.2.0/packer_virtualbox-iso_virtualbox.box
+[2016-06-06 17:01:54] NOTICE: Writing registry containing 3 manifests
+[2016-06-06 17:01:54] INFO: Writing manifest foo/bar-vagrant to registry
+[2016-06-06 17:01:54] INFO: Writing manifest foo/baz-vagrant to registry
+[2016-06-06 17:01:54] INFO: Writing manifest foo/qux-vagrant to registry
+```
+
 ## License
 
 MIT

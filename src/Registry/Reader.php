@@ -9,6 +9,7 @@ use Jalle19\VagrantRegistryGenerator\Filesystem\Filesystem;
 use Jalle19\VagrantRegistryGenerator\Filesystem\RemoteFilesystem;
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\FileMetadata;
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Parser as ManifestParser;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class Reader
@@ -23,6 +24,11 @@ class Reader
     private $configuration;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @var RemoteFilesystem
      */
     private $filesystem;
@@ -31,12 +37,13 @@ class Reader
     /**
      * Reader constructor.
      *
-     * @param Configuration $configuration
-     * @param Filesystem    $filesystem
+     * @param Configuration   $configuration
+     * @param LoggerInterface $logger
+     * @param Filesystem      $filesystem
      *
      * @throws InvalidConfigurationException
      */
-    public function __construct(Configuration $configuration, Filesystem $filesystem)
+    public function __construct(Configuration $configuration, LoggerInterface $logger, Filesystem $filesystem)
     {
         // The reader can only work with remote filesystems
         if (!($filesystem instanceof RemoteFilesystem)) {
@@ -44,6 +51,7 @@ class Reader
         }
 
         $this->configuration = $configuration;
+        $this->logger        = $logger;
         $this->filesystem    = $filesystem;
     }
 
@@ -56,6 +64,7 @@ class Reader
     public function readRegistry()
     {
         $filesystem = $this->filesystem->getFilesystem();
+        $this->logger->notice('Fetching manifest files');
 
         // Find all manifest files
         $manifests     = [];
@@ -73,11 +82,13 @@ class Reader
                     throw new RegistryReadFailedException('Failed to read manifest file "' . $manifestFile['path'] . '"');
                 }
 
+                $this->logger->info('Parsing manifest file at {path}', ['path' => $manifestFile['path']]);
                 $manifests[] = ManifestParser::parseManifest($manifestJson, $manifestUrl);
             }
         }
 
         $registry = new Registry($manifests);
+        $this->logger->notice('Attempting to fetch additional file metadata for each box');
 
         // Read additional information about the box
         foreach ($registry->getManifests() as $manifest) {
@@ -89,6 +100,7 @@ class Reader
                     if (count($boxContents) === 1) {
                         $boxFile   = $boxContents[0];
                         $timestamp = \DateTime::createFromFormat('U', $boxFile['timestamp']);
+                        $this->logger->info('Fetching metadata for box at {path}', ['path' => $boxFile['path']]);
 
                         if ($timestamp === false) {
                             throw new RegistryReadFailedException('Failed to parse timestamp for box file "' . $boxFile['path'] . '"');

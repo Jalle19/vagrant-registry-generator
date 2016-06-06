@@ -5,6 +5,7 @@ namespace Jalle19\VagrantRegistryGenerator\Registry;
 use Jalle19\VagrantRegistryGenerator\Configuration\Configuration;
 use Jalle19\VagrantRegistryGenerator\Filesystem\Filesystem;
 use League\Plates\Engine as TemplateEngine;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class tWriter
@@ -29,6 +30,11 @@ class Writer
     private $configuration;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @var Filesystem
      */
     private $filesystem;
@@ -37,12 +43,14 @@ class Writer
     /**
      * AbstractWriter constructor.
      *
-     * @param Configuration $configuration
-     * @param Filesystem    $filesystem
+     * @param Configuration   $configuration
+     * @param LoggerInterface $logger
+     * @param Filesystem      $filesystem
      */
-    public function __construct(Configuration $configuration, Filesystem $filesystem)
+    public function __construct(Configuration $configuration, LoggerInterface $logger, Filesystem $filesystem)
     {
         $this->configuration = $configuration;
+        $this->logger        = $logger;
         $this->filesystem    = $filesystem;
 
         // The path is relative to the generated PHAR file
@@ -59,6 +67,8 @@ class Writer
         $filesystem = $this->filesystem->getFilesystem();
         $manifests  = $registry->getManifests();
 
+        $this->logger->notice('Writing registry containing {count} manifests', ['count' => count($manifests)]);
+
         $filesystem->put('index.html', $this->templates->render('registry', [
             'manifests' => $manifests,
         ]));
@@ -68,6 +78,8 @@ class Writer
         foreach ($manifests as $manifest) {
             $filePath      = 'manifests/' . $manifest->getName();
             $directoryName = dirname($filePath);
+
+            $this->logger->info('Writing manifest {manifest} to registry', ['manifest' => $manifest->getName()]);
 
             $filesystem->put($directoryName . '/styles.css',
                 file_get_contents($this->templatePath . '/styles.css'));

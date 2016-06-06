@@ -2,10 +2,15 @@
 
 namespace Jalle19\VagrantRegistryGenerator;
 
+use Bramus\Monolog\Formatter\ColoredLineFormatter;
 use Jalle19\VagrantRegistryGenerator\Configuration\Parser as ConfigurationParser;
 use Jalle19\VagrantRegistryGenerator\Filesystem\Factory as FilesystemFactory;
 use Jalle19\VagrantRegistryGenerator\Registry\Reader;
 use Jalle19\VagrantRegistryGenerator\Registry\Writer;
+use Monolog\Logger;
+use Monolog\Processor\PsrLogMessageProcessor;
+use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -48,13 +53,35 @@ class VagrantRegistryGenerator extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $configuration  = ConfigurationParser::parseConfiguration($input);
-        $registryReader = new Reader($configuration,
+        $logger = $this->configureLogger($output);
+        
+        $registryReader = new Reader($configuration, $logger,
             FilesystemFactory::makeFilesystem($configuration->getRegistryPath(), $configuration));
-        $registryWriter = new Writer($configuration,
+        $registryWriter = new Writer($configuration, $logger,
             FilesystemFactory::makeFilesystem($configuration->getOutputPath(), $configuration));
 
         $registry = $registryReader->readRegistry();
         $registryWriter->write($registry);
+    }
+
+    /**
+     * Configures and returns the logger instance
+     *
+     * @param OutputInterface $output
+     *
+     * @return LoggerInterface
+     */
+    private function configureLogger(OutputInterface $output)
+    {
+        $consoleHandler = new ConsoleHandler($output);
+        $consoleHandler->setFormatter(new ColoredLineFormatter(null, "[%datetime%] %level_name%: %message%\n"));
+
+        $logger = new Logger(self::COMMAND_NAME);
+        $logger->pushHandler($consoleHandler);
+        $logger->pushProcessor(new PsrLogMessageProcessor());
+        
+
+        return $logger;
     }
 
 }

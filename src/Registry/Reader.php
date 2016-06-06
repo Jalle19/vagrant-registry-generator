@@ -4,6 +4,7 @@ namespace Jalle19\VagrantRegistryGenerator\Registry;
 
 use Jalle19\VagrantRegistryGenerator\Configuration\Configuration;
 use Jalle19\VagrantRegistryGenerator\Exception\InvalidConfigurationException;
+use Jalle19\VagrantRegistryGenerator\Exception\RegistryReadFailedException;
 use Jalle19\VagrantRegistryGenerator\Filesystem\Filesystem;
 use Jalle19\VagrantRegistryGenerator\Filesystem\RemoteFilesystem;
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\FileMetadata;
@@ -22,7 +23,7 @@ class Reader
     private $configuration;
 
     /**
-     * @var Filesystem
+     * @var RemoteFilesystem
      */
     private $filesystem;
 
@@ -32,7 +33,7 @@ class Reader
      *
      * @param Configuration $configuration
      * @param Filesystem    $filesystem
-     * 
+     *
      * @throws InvalidConfigurationException
      */
     public function __construct(Configuration $configuration, Filesystem $filesystem)
@@ -48,7 +49,9 @@ class Reader
 
 
     /**
+     * @return Registry
      *
+     * @throws RegistryReadFailedException
      */
     public function readRegistry()
     {
@@ -66,6 +69,10 @@ class Reader
                 $manifestJson = $filesystem->read($manifestFile['path']);
                 $manifestUrl  = $this->filesystem->getUrl($manifestFile['path']);
 
+                if ($manifestJson === false) {
+                    throw new RegistryReadFailedException('Failed to read manifest file "' . $manifestFile['path'] . '"');
+                }
+
                 $manifests[] = ManifestParser::parseManifest($manifestJson, $manifestUrl);
             }
         }
@@ -80,11 +87,16 @@ class Reader
                     $boxContents = $filesystem->listContents('boxes/' . $manifest->getName() . '/' . $version->getVersion());
 
                     if (count($boxContents) === 1) {
-                        $boxFile = $boxContents[0];
+                        $boxFile   = $boxContents[0];
+                        $timestamp = \DateTime::createFromFormat('U', $boxFile['timestamp']);
+
+                        if ($timestamp === false) {
+                            throw new RegistryReadFailedException('Failed to parse timestamp for box file "' . $boxFile['path'] . '"');
+                        }
 
                         $provider->setFileMetadata(new FileMetadata(
                             $boxFile['basename'],
-                            \DateTime::createFromFormat('U', $boxFile['timestamp']),
+                            $timestamp,
                             $boxFile['size']));
                     }
                 }

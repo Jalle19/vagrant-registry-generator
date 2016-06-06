@@ -4,6 +4,7 @@ namespace Jalle19\VagrantRegistryGenerator\Registry;
 
 use Jalle19\VagrantRegistryGenerator\Configuration\Configuration;
 use Jalle19\VagrantRegistryGenerator\Filesystem\Filesystem;
+use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Manifest;
 use League\Plates\Engine as TemplateEngine;
 use Psr\Log\LoggerInterface;
 
@@ -64,30 +65,49 @@ class Writer
      */
     public function write(Registry $registry)
     {
-        $filesystem = $this->filesystem->getFilesystem();
-        $manifests  = $registry->getManifests();
+        $manifests = $registry->getManifests();
 
         $this->logger->notice('Writing registry containing {count} manifests', ['count' => count($manifests)]);
+        $this->writeIndex($manifests);
+
+        foreach ($manifests as $manifest) {
+            $this->logger->info('Writing manifest {manifest} to registry', ['manifest' => $manifest->getName()]);
+            $this->writeManifest($manifest);
+        }
+    }
+
+
+    /**
+     * @param array $manifests
+     */
+    private function writeIndex(array $manifests)
+    {
+        $filesystem = $this->filesystem->getFilesystem();
 
         $filesystem->put('index.html', $this->templates->render('registry', [
             'manifests' => $manifests,
         ]));
 
         $filesystem->put('styles.css', file_get_contents($this->templatePath . '/styles.css'));
+    }
 
-        foreach ($manifests as $manifest) {
-            $filePath      = 'manifests/' . $manifest->getName();
-            $directoryName = dirname($filePath);
 
-            $this->logger->info('Writing manifest {manifest} to registry', ['manifest' => $manifest->getName()]);
+    /**
+     * @param Manifest $manifest
+     */
+    private function writeManifest(Manifest $manifest)
+    {
+        $filesystem = $this->filesystem->getFilesystem();
 
-            $filesystem->put($directoryName . '/styles.css',
-                file_get_contents($this->templatePath . '/styles.css'));
+        $filePath      = 'manifests/' . $manifest->getName();
+        $directoryName = dirname($filePath);
 
-            $filesystem->put($filePath . '.html', $this->templates->render('manifest', [
-                'manifest' => $manifest,
-            ]));
-        }
+        $filesystem->put($directoryName . '/styles.css',
+            file_get_contents($this->templatePath . '/styles.css'));
+
+        $filesystem->put($filePath . '.html', $this->templates->render('manifest', [
+            'manifest' => $manifest,
+        ]));
     }
 
 }

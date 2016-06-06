@@ -8,7 +8,9 @@ use Jalle19\VagrantRegistryGenerator\Exception\RegistryReadFailedException;
 use Jalle19\VagrantRegistryGenerator\Filesystem\Filesystem;
 use Jalle19\VagrantRegistryGenerator\Filesystem\RemoteFilesystem;
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\FileMetadata;
+use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Manifest;
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Parser as ManifestParser;
+use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Version;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -63,10 +65,34 @@ class Reader
      */
     public function readRegistry()
     {
-        $filesystem = $this->filesystem->getFilesystem();
         $this->logger->notice('Fetching manifest files');
+        $manifests = $this->parseManifests();
 
-        // Find all manifest files
+        $this->logger->notice('Attempting to fetch additional file metadata for each box');
+
+        foreach ($manifests as $manifest) {
+            foreach ($manifest->getVersions() as $version) {
+                foreach ($version->getProviders() as $provider) {
+                    $fileMetadata = $this->parseProviderFileMetadata($manifest, $version);
+
+                    if ($fileMetadata !== null) {
+                        $provider->setFileMetadata($fileMetadata);
+                    }
+                }
+            }
+        }
+
+        return new Registry($manifests);
+    }
+
+
+    /**
+     * @return Manifest[]
+     * @throws RegistryReadFailedException
+     */
+    private function parseManifests()
+    {
+        $filesystem    = $this->filesystem->getFilesystem();
         $manifests     = [];
         $organizations = $filesystem->listContents('json');
 
@@ -87,35 +113,37 @@ class Reader
             }
         }
 
-        $registry = new Registry($manifests);
-        $this->logger->notice('Attempting to fetch additional file metadata for each box');
+        return $manifests;
+    }
 
-        // Read additional information about the box
-        foreach ($registry->getManifests() as $manifest) {
-            foreach ($manifest->getVersions() as $version) {
-                foreach ($version->getProviders() as $provider) {
-                    // Get the contents of the corresponding box directory
-                    $boxContents = $filesystem->listContents('boxes/' . $manifest->getName() . '/' . $version->getVersion());
 
-                    if (count($boxContents) === 1) {
-                        $boxFile   = $boxContents[0];
-                        $timestamp = \DateTime::createFromFormat('U', $boxFile['timestamp']);
-                        $this->logger->info('Fetching metadata for box at {path}', ['path' => $boxFile['path']]);
+    /**
+     * @param Manifest $manifest
+     * @param Version  $version
+     *
+     * @return FileMetadata|null
+     * @throws RegistryReadFailedException
+     */
+    private function parseProviderFileMetadata(Manifest $manifest, Version $version)
+    {
+        $filesystem = $this->filesystem->getFilesystem();
 
-                        if ($timestamp === false) {
-                            throw new RegistryReadFailedException('Failed to parse timestamp for box file "' . $boxFile['path'] . '"');
-                        }
+        // Get the contents of the corresponding box directory
+        $boxContents = $filesystem->listContents('boxes/' . $manifest->getName() . '/' . $version->getVersion());
 
-                        $provider->setFileMetadata(new FileMetadata(
-                            $boxFile['basename'],
-                            $timestamp,
-                            $boxFile['size']));
-                    }
-                }
+        if (count($boxContents) === 1) {
+            $boxFile   = $boxContents[0];
+            $timestamp = \DateTime::createFromFormat('U', $boxFile['timestamp']);
+            $this->logger->info('Fetching metadata for box at {path}', ['path' => $boxFile['path']]);
+
+            if ($timestamp === false) {
+                throw new RegistryReadFailedException('Failed to parse timestamp for box file "' . $boxFile['path'] . '"');
             }
+
+            return new FileMetadata($boxFile['basename'], $timestamp, $boxFile['size']);
         }
 
-        return $registry;
+        return null;
     }
 
 }

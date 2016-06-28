@@ -22,24 +22,16 @@ class Parser
     public static function parseConfiguration(InputInterface $input)
     {
         $configuration = new Configuration();
-        $outputPath    = $input->getArgument('outputPath');
 
         $configuration
             ->setRegistryPath($input->getArgument('registryPath'))
-            ->setOutputPath($outputPath)
+            ->setOutputPath(self::parseOutputPath($input))
             ->setAwsAccessKey(self::parseAwsAccessKey($input))
             ->setAwsSecretKey(self::parseAwsSecretKey($input))
             ->setAwsRegion($input->getOption('awsRegion'));
 
         if (!$configuration->hasCredentials()) {
             throw new MissingCredentialsException('No AWS credentials configured, see --help for how to configure them');
-        }
-
-        if (Configuration::getFilesystemType($outputPath) === Configuration::FILESYSTEM_TYPE_LOCAL) {
-            // Convert to absolute path
-            if (substr($outputPath, 0, 1) !== '/') {
-                $configuration->setOutputPath(getcwd() . '/' . $outputPath);
-            }
         }
 
         return $configuration;
@@ -64,6 +56,27 @@ class Parser
         }
 
         return [$bucket, $prefix];
+    }
+
+
+    /**
+     * Parses the output path argument, ensuring that local paths are absolute
+     *
+     * @param InputInterface $input
+     *
+     * @return string
+     */
+    private static function parseOutputPath(InputInterface $input)
+    {
+        $outputPath = $input->getArgument('outputPath');
+
+        if (Configuration::getFilesystemType($outputPath) === Configuration::FILESYSTEM_TYPE_LOCAL &&
+            substr($outputPath, 0, 1) !== '/'
+        ) {
+            $outputPath = getcwd() . '/' . $outputPath;
+        }
+
+        return $outputPath;
     }
 
 

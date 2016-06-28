@@ -49,7 +49,12 @@ class Parser
         $url = parse_url($path);
 
         $bucket = $url['host'];
-        $prefix = trim($url['path'], '/');
+        $prefix = '';
+
+        // Prefix is optional
+        if (isset($url['path'])) {
+            $prefix = trim($url['path'], '/');
+        }
 
         return [$bucket, $prefix];
     }

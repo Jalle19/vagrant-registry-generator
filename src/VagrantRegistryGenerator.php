@@ -35,8 +35,10 @@ class VagrantRegistryGenerator extends Command
         $this->setName(self::COMMAND_NAME);
         $this->setDescription('Static Vagrant registry generator');
 
-        $this->addArgument('registryPath', InputArgument::REQUIRED, 'The path to the Vagrant registry');
-        $this->addArgument('outputPath', InputArgument::REQUIRED, 'The path where the output is generated');
+        $this->addArgument('registryPath', InputArgument::REQUIRED,
+            'The path to the Vagrant registry (e.g. s3://my-bucket/my-prefix)');
+        $this->addArgument('outputPath', InputArgument::REQUIRED,
+            'The path where the output is generated (e.g. s3://my-bucket)');
 
         $this->addOption('awsAccessKey', null, InputOption::VALUE_OPTIONAL,
             'The AWS access key to use (required when using S3 paths)');
@@ -52,9 +54,9 @@ class VagrantRegistryGenerator extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $configuration  = ConfigurationParser::parseConfiguration($input);
-        $logger = $this->configureLogger($output);
-        
+        $configuration = ConfigurationParser::parseConfiguration($input);
+        $logger        = $this->configureLogger($output);
+
         $registryReader = new Reader($configuration, $logger,
             FilesystemFactory::makeFilesystem($configuration->getRegistryPath(), $configuration));
         $registryWriter = new Writer($configuration, $logger,
@@ -63,6 +65,7 @@ class VagrantRegistryGenerator extends Command
         $registry = $registryReader->readRegistry();
         $registryWriter->write($registry);
     }
+
 
     /**
      * Configures and returns the logger instance
@@ -79,7 +82,6 @@ class VagrantRegistryGenerator extends Command
         $logger = new Logger(self::COMMAND_NAME);
         $logger->pushHandler($consoleHandler);
         $logger->pushProcessor(new PsrLogMessageProcessor());
-        
 
         return $logger;
     }

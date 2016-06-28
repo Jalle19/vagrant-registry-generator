@@ -59,7 +59,7 @@ Help:
  Static Vagrant registry generator
 ```
 
-`registryPath` and `outputPath` should be in the form of `s3://bucket/prefix`. You can also store the output locally 
+`registryPath` and `outputPath` should be in the form of `s3://bucket` or `s3://bucket/prefix`. You can also store the output locally 
 by passing a local path to `outputPath`, e.g. `./dist`.
 
 To see what the program does, add `-vv` to the end of the command. Here's a sample of the output it produces on a 

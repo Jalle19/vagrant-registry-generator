@@ -29,6 +29,9 @@ bucket/prefix
           - box.box
 ```
 
+The bucket prefix is optional. If the prefix is omitted, the registry is written to the root of the bucket which means 
+you can easily enable the S3 static website hosting feature to access the registry.
+
 ## Usage
 
 ```
@@ -37,8 +40,8 @@ Usage:
   vagrant-registry-generator [options] [--] <registryPath> <outputPath>
 
 Arguments:
-  registryPath                       The path to the Vagrant registry
-  outputPath                         The path where the output is generated
+  registryPath                       The path to the Vagrant registry (e.g. s3://my-bucket/my-prefix)
+  outputPath                         The path where the output is generated (e.g. s3://my-bucket)
 
 Options:
       --awsAccessKey[=AWSACCESSKEY]  The AWS access key to use (required when using S3 paths)

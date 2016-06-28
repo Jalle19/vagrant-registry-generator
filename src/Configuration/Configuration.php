@@ -149,6 +149,15 @@ class Configuration
 
 
     /**
+     * @return bool
+     */
+    public function hasCredentials()
+    {
+        return !empty($this->awsAccessKey) && !empty($this->awsSecretKey);
+    }
+
+
+    /**
      * @param string $path
      *
      * @return string

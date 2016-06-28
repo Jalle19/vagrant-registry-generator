@@ -44,8 +44,8 @@ Arguments:
   outputPath                         The path where the output is generated (e.g. s3://my-bucket)
 
 Options:
-      --awsAccessKey[=AWSACCESSKEY]  The AWS access key to use (required when using S3 paths)
-      --awsSecretKey[=AWSSECRETKEY]  The AWS secret key to use (required when using S3 paths)
+      --awsAccessKey[=AWSACCESSKEY]  The AWS access key to use (required when using S3 paths). If not specified the value will be read from the AWS_ACCESS_KEY_ID environment variable
+      --awsSecretKey[=AWSSECRETKEY]  The AWS secret key to use (required when using S3 paths). If not specified the value will be read from the AWS_SECRET_ACCESS_KEY environment variable
       --awsRegion[=AWSREGION]        The AWS region where your S3 bucket resides (required when using S3 paths)
   -h, --help                         Display this help message
   -q, --quiet                        Do not output any message

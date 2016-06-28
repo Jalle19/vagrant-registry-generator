@@ -36,4 +36,23 @@ class Registry
         return $this->manifests;
     }
 
+
+    /**
+     * @return array
+     */
+    public function getOrganizations()
+    {
+        $organizations = [];
+
+        foreach ($this->manifests as $manifest) {
+            list($organization,) = $manifest->getName();
+
+            if (!in_array($organization, $organizations)) {
+                $organizations[] = $organizations;
+            }
+        }
+
+        return $organizations;
+    }
+
 }

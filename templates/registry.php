@@ -3,12 +3,13 @@
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Manifest;
 
 /* @var Manifest[] $manifests */
+/* @var array $organizations */
 
 $this->layout('layout', ['title' => 'Vagrant Registry']);
 
 ?>
 <p>
-    This registry holds a total of <?php echo count($manifests); ?> manifest(s)
+    This registry holds a total of <?php echo count($manifests); ?> manifest(s) from <?php echo count($organizations); ?> organization(s)
 </p>
 
 <h2>Manifests</h2>

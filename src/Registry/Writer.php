@@ -65,10 +65,16 @@ class Writer
      */
     public function write(Registry $registry)
     {
-        $manifests = $registry->getManifests();
+        $manifests     = $registry->getManifests();
+        $organizations = $registry->getOrganizations();
 
-        $this->logger->notice('Writing registry containing {count} manifests', ['count' => count($manifests)]);
-        $this->writeIndex($manifests);
+        $this->logger->notice('Writing registry containing {manifestCount} manifest(s) from {organizationCount} organization(s)',
+            [
+                'manifestCount'     => count($manifests),
+                'organizationCount' => count($organizations),
+            ]);
+
+        $this->writeRegistry($registry);
 
         foreach ($manifests as $manifest) {
             $this->logger->info('Writing manifest {manifest} to registry', ['manifest' => $manifest->getName()]);
@@ -78,14 +84,15 @@ class Writer
 
 
     /**
-     * @param array $manifests
+     * @param Registry $registry
      */
-    private function writeIndex(array $manifests)
+    private function writeRegistry(Registry $registry)
     {
         $filesystem = $this->filesystem->getFilesystem();
 
         $filesystem->put('index.html', $this->templates->render('registry', [
-            'manifests' => $manifests,
+            'manifests'     => $registry->getManifests(),
+            'organizations' => $registry->getOrganizations(),
         ]));
 
         $filesystem->put('styles.css', file_get_contents($this->templatePath . '/styles.css'));

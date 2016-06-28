@@ -99,8 +99,7 @@ class Reader
         foreach ($organizations as $organization) {
             $manifestFiles = $filesystem->listContents($organization['path']);
 
-            if (count($manifestFiles) === 1) {
-                $manifestFile = $manifestFiles[0];
+            foreach ($manifestFiles as $manifestFile) {
                 $manifestJson = $filesystem->read($manifestFile['path']);
                 $manifestUrl  = $this->filesystem->getUrl($manifestFile['path']);
 

@@ -9,7 +9,7 @@ $this->layout('layout', ['title' => 'Vagrant Registry']);
 
 ?>
 <p>
-    This registry holds a total of <?php echo count($manifests); ?> manifest(s) from <?php echo count($organizations); ?> organization(s)
+    This registry contains a total of <?php echo count($manifests); ?> manifest(s) from <?php echo count($organizations); ?> organization(s)
 </p>
 
 <h2>Manifests</h2>

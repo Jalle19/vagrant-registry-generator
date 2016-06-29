@@ -3,14 +3,20 @@
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Manifest;
 
 /* @var Manifest $manifest */
-$name = $manifest->getName();
+$name     = $manifest->getName();
+$versions = $manifest->getVersions();
+
 $this->layout('layout', ['title' => $name . ' - Vagrant Registry']);
 
 ?>
 <h2><?=$this->e($name);?></h2>
+
+<p>
+    This manifest contains <?php echo count($versions); ?> version(s)
+</p>
 <?php
 
-foreach (array_reverse($manifest->getVersions()) as $version) {
+foreach (array_reverse($versions) as $version) {
     $this->insert('version', [
         'boxName'     => $manifest->getName(),
         'version'     => $version,

@@ -26,6 +26,7 @@ class Parser
         $configuration
             ->setRegistryPath($input->getArgument('registryPath'))
             ->setOutputPath(self::parseOutputPath($input))
+            ->setTemplatePath(__DIR__ . '/../../templates')
             ->setAwsAccessKey(self::parseAwsAccessKey($input))
             ->setAwsSecretKey(self::parseAwsSecretKey($input))
             ->setAwsRegion($input->getOption('awsRegion'));

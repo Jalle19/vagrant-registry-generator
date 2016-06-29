@@ -21,11 +21,6 @@ class Writer
     private $templates;
 
     /**
-     * @var string
-     */
-    private $templatePath;
-
-    /**
      * @var Configuration
      */
     private $configuration;
@@ -54,9 +49,7 @@ class Writer
         $this->logger        = $logger;
         $this->filesystem    = $filesystem;
 
-        // The path is relative to the generated PHAR file
-        $this->templatePath = './templates';
-        $this->templates    = new TemplateEngine($this->templatePath);
+        $this->templates = new TemplateEngine($this->configuration->getTemplatePath());
     }
 
 
@@ -95,7 +88,7 @@ class Writer
             'organizations' => $registry->getOrganizations(),
         ]));
 
-        $filesystem->put('styles.css', file_get_contents($this->templatePath . '/styles.css'));
+        $filesystem->put('styles.css', file_get_contents($this->configuration->getTemplatePath() . '/styles.css'));
     }
 
 
@@ -110,7 +103,7 @@ class Writer
         $directoryName = dirname($filePath);
 
         $filesystem->put($directoryName . '/styles.css',
-            file_get_contents($this->templatePath . '/styles.css'));
+            file_get_contents($this->configuration->getTemplatePath() . '/styles.css'));
 
         $filesystem->put($filePath . '.html', $this->templates->render('manifest', [
             'manifest' => $manifest,

@@ -25,6 +25,11 @@ class Configuration
     /**
      * @var string
      */
+    private $templatePath;
+
+    /**
+     * @var string
+     */
     private $awsAccessKey;
 
     /**
@@ -77,6 +82,28 @@ class Configuration
     public function setOutputPath($outputPath)
     {
         $this->outputPath = $outputPath;
+
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getTemplatePath()
+    {
+        return $this->templatePath;
+    }
+
+
+    /**
+     * @param string $templatePath
+     *
+     * @return Configuration
+     */
+    public function setTemplatePath($templatePath)
+    {
+        $this->templatePath = $templatePath;
 
         return $this;
     }

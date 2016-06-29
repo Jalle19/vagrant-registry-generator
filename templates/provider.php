@@ -24,10 +24,10 @@ use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Provider;
 
     ?>
     <pre class="vagrantFile">
-<?php $this->insert('vagrantFile', [
+<?php echo trim($this->fetch('vagrantFile', [
     'boxName'     => $boxName,
     'provider'    => $provider->getName(),
     'manifestUrl' => $manifestUrl,
-]); ?>
+])); ?>
     </pre>
 </div>

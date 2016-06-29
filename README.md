@@ -82,6 +82,49 @@ successful run:
 [2016-06-06 17:01:54] INFO: Writing manifest foo/qux-vagrant to registry
 ```
 
+### Running as a Packer post-processor
+
+To automatically update the registry whenever a new artifact is built you can run the command as a Packer 
+post-processor. Here's a complete example on how to use it in a post-processor chain together with 
+[packer-post-processor-vagrant-s3](https://github.com/lmars/packer-post-processor-vagrant-s3) (change the path to the 
+command if necessary):
+ 
+```json
+{
+  "variables": {
+    "ATLAS_ORGANIZATION": "my-organization",
+    "BOX_NAME": "my-box",
+    "AWS_ACCESS_KEY_ID": "retrieve this from env",
+    "AWS_SECRET_ACCESS_KEY": "retrieve this from env",
+    "AWS_REGION": "eu-west-1",
+    "AWS_BUCKET": "my-s3-bucket"
+  },
+  "builders": [ ... ],
+  "provisioners": [ ... ],
+  "post-processors": [
+    [
+      {
+        "type": "vagrant"
+      },
+      {
+        "type": "vagrant-s3",
+        "access_key_id": "{{ user `AWS_ACCESS_KEY_ID` }}",
+        "secret_key": "{{ user `AWS_SECRET_ACCESS_KEY` }}",
+        "region": "{{ user `AWS_REGION` }}",
+        "bucket": "{{ user `AWS_BUCKET` }}",
+        "manifest": "vagrant/json/{{ user `ATLAS_ORGANIZATION` }}/{{ user `BOX_NAME` }}.json",
+        "box_dir": "vagrant/boxes/{{ user `ATLAS_ORGANIZATION` }}/{{ user `BOX_NAME` }}",
+        "box_name": "{{ user `ATLAS_ORGANIZATION` }}/{{ user `BOX_NAME` }}"
+      },
+      {
+        "type": "shell-local",
+        "inline": ["/opt/vagrant-registry-generator.phar --awsAccessKey {{ user `AWS_ACCESS_KEY_ID` }} --awsSecretKey {{ user `AWS_SECRET_ACCESS_KEY` }} --awsRegion {{ user `AWS_REGION` }} s3://{{ user `AWS_BUCKET` }}/vagrant s3://{{ user `AWS_BUCKET` }}/vagrant -vv"]
+      }
+    ]
+  ]
+}
+```
+
 ## License
 
 MIT

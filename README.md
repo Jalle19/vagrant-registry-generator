@@ -118,7 +118,7 @@ command if necessary):
       },
       {
         "type": "shell-local",
-        "inline": ["/opt/vagrant-registry-generator.phar --awsAccessKey {{ user `AWS_ACCESS_KEY_ID` }} --awsSecretKey {{ user `AWS_SECRET_ACCESS_KEY` }} --awsRegion {{ user `AWS_REGION` }} s3://{{ user `AWS_BUCKET` }}/vagrant s3://{{ user `AWS_BUCKET` }}/vagrant -vv"]
+        "inline": ["php /opt/vagrant-registry-generator.phar --awsAccessKey {{ user `AWS_ACCESS_KEY_ID` }} --awsSecretKey {{ user `AWS_SECRET_ACCESS_KEY` }} --awsRegion {{ user `AWS_REGION` }} s3://{{ user `AWS_BUCKET` }}/vagrant s3://{{ user `AWS_BUCKET` }}/vagrant -vv"]
       }
     ]
   ]

@@ -24,8 +24,8 @@ $this->layout('layout', ['title' => 'Vagrant Registry']);
         <li class="manifest">
             <a href="manifests/<?=$this->e($name)?>.html"><?=$this->e($name)?></a>
 
-            <p class="lastModified">
-                Last modified:
+            <span class="lastModified">
+                (last modified:
                 <?php
 
                 $lastModified = $manifest->getLastModified();
@@ -36,8 +36,8 @@ $this->layout('layout', ['title' => 'Vagrant Registry']);
                     echo 'not available';
                 }
 
-                ?>
-            </p>
+                ?>)
+            </span>
         </li>
         <?php
     }

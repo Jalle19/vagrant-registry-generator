@@ -10,6 +10,7 @@ use Jalle19\VagrantRegistryGenerator\Filesystem\RemoteFilesystem;
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\FileMetadata;
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Manifest;
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Parser as ManifestParser;
+use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Provider;
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Version;
 use Psr\Log\LoggerInterface;
 
@@ -73,7 +74,7 @@ class Reader
         foreach ($manifests as $manifest) {
             foreach ($manifest->getVersions() as $version) {
                 foreach ($version->getProviders() as $provider) {
-                    $fileMetadata = $this->parseProviderFileMetadata($manifest, $version);
+                    $fileMetadata = $this->parseProviderFileMetadata($manifest, $version, $provider);
 
                     if ($fileMetadata !== null) {
                         $provider->setFileMetadata($fileMetadata);
@@ -119,19 +120,24 @@ class Reader
     /**
      * @param Manifest $manifest
      * @param Version  $version
+     * @param Provider $provider
      *
      * @return FileMetadata|null
      * @throws RegistryReadFailedException
      */
-    private function parseProviderFileMetadata(Manifest $manifest, Version $version)
+    private function parseProviderFileMetadata(Manifest $manifest, Version $version, Provider $provider)
     {
         $filesystem = $this->filesystem->getFilesystem();
 
         // Get the contents of the corresponding box directory
         $boxContents = $filesystem->listContents('boxes/' . $manifest->getName() . '/' . $version->getVersion());
 
-        if (count($boxContents) === 1) {
-            $boxFile   = $boxContents[0];
+        // Loop through each box until we find the one associated with the specified provider
+        foreach ($boxContents as $boxFile) {
+            if ($boxFile['basename'] !== basename($provider->getUrl())) {
+                continue;
+            }
+
             $timestamp = \DateTime::createFromFormat('U', $boxFile['timestamp']);
             $this->logger->info('Fetching metadata for box at {path}', ['path' => $boxFile['path']]);
 

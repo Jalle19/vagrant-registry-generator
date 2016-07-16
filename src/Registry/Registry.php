@@ -45,10 +45,10 @@ class Registry
         $organizations = [];
 
         foreach ($this->manifests as $manifest) {
-            list($organization,) = $manifest->getName();
+            list($organization,) = explode('/', $manifest->getName());
 
             if (!in_array($organization, $organizations)) {
-                $organizations[] = $organizations;
+                $organizations[] = $organization;
             }
         }
 

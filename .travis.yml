@@ -8,4 +8,5 @@ install:
   - composer install
   - curl -LSs https://box-project.github.io/box2/installer.php | php
 script:
+  - php vendor/bin/phpunit
   - php box.phar build

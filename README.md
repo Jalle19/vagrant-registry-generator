@@ -83,6 +83,10 @@ successful run:
 [2016-06-06 17:01:54] INFO: Writing manifest foo/qux-vagrant to registry
 ```
 
+## Testing
+
+Run the test suite by running `./vendor/bin/phpunit` from the project directory.
+
 ## License
 
 MIT

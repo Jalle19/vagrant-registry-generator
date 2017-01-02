@@ -9,6 +9,7 @@
         }
     ],
     "require": {
+        "php": "^5.6 || ^7.0",
         "jalle19/single-command-application": "^1.0",
         "league/flysystem": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
@@ -21,5 +22,13 @@
         "psr-4": {
             "Jalle19\\VagrantRegistryGenerator\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jalle19\\VagrantRegistryGenerator\\Test\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
     }
 }

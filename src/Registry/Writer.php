@@ -89,8 +89,8 @@ class Writer
         $filesystem = $this->filesystem->getFilesystem();
 
         $filesystem->put('index.html', $this->templates->render('registry', [
-            'manifests'     => $registry->getManifests(),
-            'organizations' => $registry->getOrganizations(),
+            'manifests'              => $registry->getManifests(),
+            'organizationStatistics' => $registry->getOrganizationStatistics(),
         ]));
 
         $filesystem->put('styles.css', file_get_contents($this->configuration->getTemplatePath() . '/styles.css'));

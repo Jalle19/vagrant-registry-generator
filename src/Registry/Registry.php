@@ -68,4 +68,19 @@ class Registry
         return $organizations;
     }
 
+
+    /**
+     * @return array
+     */
+    public function getOrganizationStatistics()
+    {
+        $statistics = [];
+
+        foreach ($this->getOrganizations() as $organization) {
+            $statistics[$organization] = count($this->getManifestsByOrganization($organization));
+        }
+
+        return $statistics;
+    }
+
 }

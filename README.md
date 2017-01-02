@@ -76,7 +76,8 @@ successful run:
 [2016-06-06 17:01:53] INFO: Fetching metadata for box at boxes/foo/baz-vagrant/0.1.0/packer_virtualbox-iso_virtualbox.box
 [2016-06-06 17:01:53] INFO: Fetching metadata for box at boxes/foo/qux-vagrant/0.1.0/packer_vmware-iso_vmware.box
 [2016-06-06 17:01:54] INFO: Fetching metadata for box at boxes/foo/qux-vagrant/0.2.0/packer_virtualbox-iso_virtualbox.box
-[2016-06-06 17:01:54] NOTICE: Writing registry containing 3 manifests
+[2016-06-06 17:01:54] NOTICE: Writing registry containing 3 manifest(s) from 1 organization(s)
+[2016-06-06 17:01:54] INFO: Writing organization foo to registry
 [2016-06-06 17:01:54] INFO: Writing manifest foo/bar-vagrant to registry
 [2016-06-06 17:01:54] INFO: Writing manifest foo/baz-vagrant to registry
 [2016-06-06 17:01:54] INFO: Writing manifest foo/qux-vagrant to registry

@@ -69,6 +69,11 @@ class Writer
 
         $this->writeRegistry($registry);
 
+        foreach ($organizations as $organization) {
+            $this->logger->info('Writing organization {organization} to registry', ['organization' => $organization]);
+            $this->writeOrganization($organization, $registry->getManifestsByOrganization($organization));
+        }
+
         foreach ($manifests as $manifest) {
             $this->logger->info('Writing manifest {manifest} to registry', ['manifest' => $manifest->getName()]);
             $this->writeManifest($manifest);
@@ -107,6 +112,27 @@ class Writer
 
         $filesystem->put($filePath . '.html', $this->templates->render('manifest', [
             'manifest' => $manifest,
+        ]));
+    }
+
+
+    /**
+     * @param string     $organization
+     * @param Manifest[] $manifests
+     */
+    private function writeOrganization($organization, array $manifests)
+    {
+        $filesystem = $this->filesystem->getFilesystem();
+
+        $filePath      = 'organizations/' . $organization;
+        $directoryName = dirname($filePath);
+
+        $filesystem->put($directoryName . '/styles.css',
+            file_get_contents($this->configuration->getTemplatePath() . '/styles.css'));
+
+        $filesystem->put($filePath . '.html', $this->templates->render('organization', [
+            'organization' => $organization,
+            'manifests'    => $manifests,
         ]));
     }
 

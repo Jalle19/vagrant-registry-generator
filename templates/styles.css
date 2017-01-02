@@ -2,6 +2,10 @@ body {
     font-family: serif;
 }
 
+li {
+    line-height: 1.5em;
+}
+
 .header {
     border-bottom: 1px solid darkgray;
 }
@@ -10,10 +14,6 @@ body {
     border-top: 1px solid darkgray;
     padding-top: 1em;
     font-size: small;
-}
-
-li.manifest {
-    line-height: 1.5em;
 }
 
 pre.vagrantFile {

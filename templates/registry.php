@@ -9,35 +9,25 @@ $this->layout('layout', ['title' => 'Vagrant Registry']);
 
 ?>
 <p>
-    This registry contains a total of <?php echo count($manifests); ?> manifest(s) from <?php echo count($organizations); ?> organization(s)
+    This registry contains a total of <?php echo count($manifests); ?> manifest(s)
+    from <?php echo count($organizations); ?> organization(s)
 </p>
+<?php
 
-<h2>Manifests</h2>
+$this->insert('manifests', [
+    'manifests' => $manifests,
+]);
+
+?>
+<h2>Organizations</h2>
 
 <ul>
     <?php
 
-    foreach ($manifests as $manifest) {
-        $name = $manifest->getName();
-
+    foreach ($organizations as $organization) {
         ?>
-        <li class="manifest">
-            <a href="manifests/<?=$this->e($name)?>.html"><?=$this->e($name)?></a>
-
-            <span class="lastModified">
-                (last modified:
-                <?php
-
-                $lastModified = $manifest->getLastModified();
-
-                if ($lastModified !== null) {
-                    echo $lastModified->format('c');
-                } else {
-                    echo 'not available';
-                }
-
-                ?>)
-            </span>
+        <li>
+            <a href="organizations/<?=$this->e($organization)?>.html"><?=$this->e($organization)?></a>
         </li>
         <?php
     }

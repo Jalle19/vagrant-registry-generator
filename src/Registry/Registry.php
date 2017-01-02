@@ -38,6 +38,19 @@ class Registry
 
 
     /**
+     * @param string $organization the name of the organization
+     *
+     * @return Manifest[]
+     */
+    public function getManifestsByOrganization($organization)
+    {
+        return array_filter($this->manifests, function(Manifest $manifest) use ($organization) {
+            return $manifest->getOrganization() === $organization;
+        });
+    }
+
+
+    /**
      * @return array
      */
     public function getOrganizations()

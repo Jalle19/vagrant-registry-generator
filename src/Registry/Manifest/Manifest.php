@@ -65,7 +65,18 @@ class Manifest
     {
         return $this->url;
     }
-    
+
+
+    /**
+     * @return string
+     */
+    public function getOrganization()
+    {
+        list($organization,) = explode('/', $this->getName());
+
+        return (string)$organization;
+    }
+
 
     /**
      * @return \DateTime|null

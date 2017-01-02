@@ -11,6 +11,7 @@
     {
       "name": "*.php",
       "exclude": [
+        "tests",
         "Tests"
       ],
       "in": "vendor"

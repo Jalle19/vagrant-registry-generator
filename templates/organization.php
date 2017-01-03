@@ -16,4 +16,5 @@ $this->layout('layout', ['title' => $organization . ' - Vagrant Registry']);
 
 $this->insert('manifests', [
     'manifests' => $manifests,
+    'baseUrl'   => '../',
 ]);

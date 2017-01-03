@@ -3,6 +3,7 @@
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Manifest;
 
 /* @var Manifest[] $manifests */
+/* @var string $baseUrl */
 
 ?>
 <h2>Manifests</h2>
@@ -15,7 +16,7 @@ use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Manifest;
 
         ?>
         <li>
-            <a href="manifests/<?=$this->e($name)?>.html"><?=$this->e($name)?></a>
+            <a href="<?=$baseUrl?>manifests/<?=$this->e($name)?>.html"><?=$this->e($name)?></a>
 
             <span class="lastModified">
                 (last modified:

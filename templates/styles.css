@@ -26,3 +26,12 @@ div.fileMetadata span {
     display: inline-block;
     padding-right: 1em;
 }
+
+div.version a {
+    text-decoration: none;
+    color: black;
+}
+
+div.version h2 {
+    padding-bottom: 0.5em;
+}

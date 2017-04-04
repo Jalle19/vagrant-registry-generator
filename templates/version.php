@@ -9,7 +9,7 @@ use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Version;
 ?>
 <div class="version">
     <a href="#<?php echo $version->getVersion(); ?>" name="<?php echo $version->getVersion(); ?>">
-        <h2><?php echo $version->getVersion(); ?></h2>
+        <h2 class="header"><?php echo $version->getVersion(); ?></h2>
     </a>
     <?php
 

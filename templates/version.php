@@ -8,7 +8,9 @@ use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Version;
 
 ?>
 <div class="version">
-    <h2><?php echo $version->getVersion(); ?></h2>
+    <a href="#<?php echo $version->getVersion(); ?>" name="<?php echo $version->getVersion(); ?>">
+        <h2><?php echo $version->getVersion(); ?></h2>
+    </a>
     <?php
 
     foreach ($version->getProviders() as $provider) {

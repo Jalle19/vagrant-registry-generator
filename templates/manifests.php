@@ -8,33 +8,38 @@ use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Manifest;
 ?>
 <h2>Manifests</h2>
 
-<ul>
+<table>
+  <tr>
+    <th>Name:</th>
+    <th>Last modified:</th>
+  </tr>
+
     <?php
 
     foreach ($manifests as $manifest) {
         $name = $manifest->getName();
 
         ?>
-        <li>
+        <tr>
+          <td>
             <a href="<?=$baseUrl?>manifests/<?=$this->e($name)?>.html"><?=$this->e($name)?></a>
+          </td>
+          <td>
+            <?php
 
-            <span class="lastModified">
-                (last modified:
-                <?php
+            $lastModified = $manifest->getLastModified();
 
-                $lastModified = $manifest->getLastModified();
+            if ($lastModified !== null) {
+                echo $lastModified->format('c');
+            } else {
+                echo 'not available';
+            }
 
-                if ($lastModified !== null) {
-                    echo $lastModified->format('c');
-                } else {
-                    echo 'not available';
-                }
-
-                ?>)
-            </span>
-        </li>
+            ?>
+          </td>
+        </tr>
         <?php
     }
 
     ?>
-</ul>
+</table>

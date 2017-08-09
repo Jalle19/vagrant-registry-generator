@@ -3,17 +3,25 @@
 /** @var array $organizationStatistics */
 
 ?>
-<ul>
+<table>
+    <tr>
+      <th>Organization:</th>
+      <th>Manifests:</th>
+    </tr>
     <?php
 
     foreach ($organizationStatistics as $organization => $manifestCount) {
         ?>
-      <li>
-        <a href="organizations/<?=$this->e($organization)?>.html"><?=$this->e($organization)?></a>
-        (<?=$manifestCount?> manifest(s))
-      </li>
+        <tr>
+          <td>
+            <a href="organizations/<?=$this->e($organization)?>.html"><?=$this->e($organization)?></a>
+          </td>
+          <td>
+              <?=$manifestCount?>
+          </td>
+        </tr>
         <?php
     }
 
     ?>
-</ul>
+</table>

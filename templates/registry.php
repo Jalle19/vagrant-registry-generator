@@ -21,18 +21,8 @@ $this->insert('manifests', [
 
 ?>
 <h2>Organizations</h2>
+<?php
 
-<ul>
-    <?php
-
-    foreach ($organizationStatistics as $organization => $manifestCount) {
-        ?>
-        <li>
-            <a href="organizations/<?=$this->e($organization)?>.html"><?=$this->e($organization)?></a>
-            (<?=$manifestCount?> manifest(s))
-        </li>
-        <?php
-    }
-
-    ?>
-</ul>
+$this->insert('organizations', [
+   'organizationStatistics'=>$organizationStatistics, 
+]);

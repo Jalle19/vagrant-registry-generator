@@ -15,11 +15,13 @@ use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Version;
 
     foreach ($version->getProviders() as $provider) {
         $this->insert('provider', [
-            'boxName'     => $boxName,
             'provider'    => $provider,
-            'manifestUrl' => $manifestUrl,
         ]);
     }
 
     ?>
+    <pre class="vagrantFile"><?php echo trim($this->fetch('vagrantFile', [
+            'boxName'     => $boxName,
+            'manifestUrl' => $manifestUrl,
+        ])); ?></pre>
 </div>

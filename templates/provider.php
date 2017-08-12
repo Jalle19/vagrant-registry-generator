@@ -3,8 +3,6 @@
 use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Provider;
 
 /* @var Provider $provider */
-/* @var string $boxName */
-/* @var string $manifestUrl */
 
 ?>
 <div class="provider">
@@ -23,10 +21,4 @@ use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Provider;
     }
 
     ?>
-    <pre class="vagrantFile">
-<?php echo trim($this->fetch('vagrantFile', [
-    'boxName'     => $boxName,
-    'manifestUrl' => $manifestUrl,
-])); ?>
-    </pre>
 </div>

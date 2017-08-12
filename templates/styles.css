@@ -29,11 +29,6 @@ pre.vagrantFile {
     background-color: lightgray;
 }
 
-div.fileMetadata span {
-    display: inline-block;
-    padding-right: 1em;
-}
-
 div.version a {
     text-decoration: none;
     color: black;

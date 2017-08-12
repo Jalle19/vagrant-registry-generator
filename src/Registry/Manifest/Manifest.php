@@ -77,6 +77,16 @@ class Manifest
         return (string)$organization;
     }
 
+    /**
+     * @return string
+     */
+    public function getBoxName()
+    {
+        list(, $boxName) = explode('/', $this->getName());
+
+        return (string)$boxName;
+    }
+
 
     /**
      * @return \DateTime|null

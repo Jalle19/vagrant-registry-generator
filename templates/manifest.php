@@ -19,8 +19,9 @@ $this->layout('layout', ['title' => $name . ' - ' . $organization . ' - Vagrant 
 
 foreach (array_reverse($versions) as $version) {
     $this->insert('version', [
-        'boxName'     => $manifest->getName(),
-        'version'     => $version,
-        'manifestUrl' => $manifest->getUrl(),
+        'boxName'           => $manifest->getName(),
+        'version'           => $version,
+        'vagrantFilePrefix' => $manifest->getBoxName(),
+        'manifestUrl'       => $manifest->getUrl(),
     ]);
 }

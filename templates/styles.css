@@ -29,7 +29,7 @@ pre.vagrantFile {
     background-color: lightgray;
 }
 
-div.version a {
+div.version a.version-anchor {
     text-decoration: none;
     color: black;
 }

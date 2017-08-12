@@ -4,11 +4,12 @@ use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Version;
 
 /* @var Version $version */
 /* @var string $boxName */
+/* @var string $vagrantFilePrefix */
 /* @var string $manifestUrl */
 
 ?>
 <div class="version">
-    <a href="#<?php echo $version->getVersion(); ?>" name="<?php echo $version->getVersion(); ?>">
+    <a class="version-anchor" href="#<?php echo $version->getVersion(); ?>" name="<?php echo $version->getVersion(); ?>">
         <h2 class="header"><?php echo $version->getVersion(); ?></h2>
     </a>
     <table>
@@ -32,8 +33,11 @@ use Jalle19\VagrantRegistryGenerator\Registry\Manifest\Version;
 
         ?>
     </table>
-    <pre class="vagrantFile"><?php echo trim($this->fetch('vagrantFile', [
+    <pre class="vagrantFile"><?php echo trim($this->fetch('vagrantFileHtml', [
             'boxName'     => $boxName,
             'manifestUrl' => $manifestUrl,
         ])); ?></pre>
+    <p>
+        <a href="<?php echo $vagrantFilePrefix; ?>/Vagrantfile">Download Vagrantfile</a>    
+    </p>
 </div>

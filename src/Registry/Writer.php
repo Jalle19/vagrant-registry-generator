@@ -113,6 +113,11 @@ class Writer
         $filesystem->put($filePath . '.html', $this->templates->render('manifest', [
             'manifest' => $manifest,
         ]));
+        
+        $filesystem->put($filePath.'/Vagrantfile', $this->templates->render('vagrantFile', [
+            'boxName'     => $manifest->getName(),
+            'manifestUrl' => $manifest->getUrl(),    
+        ]));
     }
 
 

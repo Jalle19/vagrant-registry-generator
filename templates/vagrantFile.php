@@ -1,7 +1,6 @@
 <?php
 
 /* @var string $boxName */
-/* @var string $provider */
 /* @var string $manifestUrl */
 
 ?>

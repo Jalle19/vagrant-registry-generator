@@ -5,7 +5,7 @@
 ?>
 <table>
     <tr>
-      <th>Organization:</th>
+      <th>Name:</th>
       <th>Manifests:</th>
     </tr>
     <?php

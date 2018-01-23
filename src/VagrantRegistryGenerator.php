@@ -39,11 +39,7 @@ class VagrantRegistryGenerator extends Command
             'The path to the Vagrant registry (e.g. s3://my-bucket/my-prefix)');
         $this->addArgument('outputPath', InputArgument::REQUIRED,
             'The path where the output is generated (e.g. s3://my-bucket)');
-
-        $this->addOption('awsAccessKey', null, InputOption::VALUE_OPTIONAL,
-            'The AWS access key to use (required when using S3 paths). If not specified the value will be read from the AWS_ACCESS_KEY_ID environment variable');
-        $this->addOption('awsSecretKey', null, InputOption::VALUE_OPTIONAL,
-            'The AWS secret key to use (required when using S3 paths). If not specified the value will be read from the AWS_SECRET_ACCESS_KEY environment variable');
+        
         $this->addOption('awsRegion', null, InputOption::VALUE_OPTIONAL,
             'The AWS region where your S3 bucket resides (required when using S3 paths)');
     }

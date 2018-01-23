@@ -40,10 +40,6 @@ class S3Filesystem extends RemoteFilesystem
         $this->prefix = $prefix;
 
         $client = new S3Client([
-            'credentials' => [
-                'key'    => $configuration->getAwsAccessKey(),
-                'secret' => $configuration->getAwsSecretKey(),
-            ],
             'region'      => $configuration->getAwsRegion(),
             'version'     => 'latest',
         ]);

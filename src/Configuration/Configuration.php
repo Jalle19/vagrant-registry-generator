@@ -30,16 +30,6 @@ class Configuration
     /**
      * @var string
      */
-    private $awsAccessKey;
-
-    /**
-     * @var string
-     */
-    private $awsSecretKey;
-
-    /**
-     * @var string
-     */
     private $awsRegion;
 
 
@@ -112,50 +102,6 @@ class Configuration
     /**
      * @return string
      */
-    public function getAwsAccessKey()
-    {
-        return $this->awsAccessKey;
-    }
-
-
-    /**
-     * @param string $awsAccessKey
-     *
-     * @return Configuration
-     */
-    public function setAwsAccessKey($awsAccessKey)
-    {
-        $this->awsAccessKey = $awsAccessKey;
-
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getAwsSecretKey()
-    {
-        return $this->awsSecretKey;
-    }
-
-
-    /**
-     * @param string $awsSecretKey
-     *
-     * @return Configuration
-     */
-    public function setAwsSecretKey($awsSecretKey)
-    {
-        $this->awsSecretKey = $awsSecretKey;
-
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
     public function getAwsRegion()
     {
         return $this->awsRegion;
@@ -172,15 +118,6 @@ class Configuration
         $this->awsRegion = $awsRegion;
 
         return $this;
-    }
-
-
-    /**
-     * @return bool
-     */
-    public function hasCredentials()
-    {
-        return !empty($this->awsAccessKey) && !empty($this->awsSecretKey);
     }
 
 

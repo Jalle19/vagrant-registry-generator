@@ -2,7 +2,6 @@
 
 namespace Jalle19\VagrantRegistryGenerator\Configuration;
 
-use Jalle19\VagrantRegistryGenerator\Exception\MissingCredentialsException;
 use Symfony\Component\Console\Input\InputInterface;
 
 /**
@@ -15,8 +14,6 @@ class Parser
     /**
      * @param InputInterface $input
      *
-     * @throws MissingCredentialsException
-     *
      * @return Configuration
      */
     public static function parseConfiguration(InputInterface $input)
@@ -27,13 +24,7 @@ class Parser
             ->setRegistryPath($input->getArgument('registryPath'))
             ->setOutputPath(self::parseOutputPath($input))
             ->setTemplatePath(__DIR__ . '/../../templates')
-            ->setAwsAccessKey(self::parseAwsAccessKey($input))
-            ->setAwsSecretKey(self::parseAwsSecretKey($input))
             ->setAwsRegion($input->getOption('awsRegion'));
-
-        if (!$configuration->hasCredentials()) {
-            throw new MissingCredentialsException('No AWS credentials configured, see --help for how to configure them');
-        }
 
         return $configuration;
     }
@@ -78,40 +69,6 @@ class Parser
         }
 
         return $outputPath;
-    }
-
-
-    /**
-     * @param InputInterface $input
-     *
-     * @return string|null
-     */
-    private static function parseAwsAccessKey(InputInterface $input)
-    {
-        $awsAccessKey = $input->getOption('awsAccessKey');
-
-        if (empty($awsAccessKey)) {
-            $awsAccessKey = getenv('AWS_ACCESS_KEY_ID');
-        }
-
-        return $awsAccessKey;
-    }
-
-
-    /**
-     * @param InputInterface $input
-     *
-     * @return string|null
-     */
-    private static function parseAwsSecretKey(InputInterface $input)
-    {
-        $awsSecretKey = $input->getOption('awsSecretKey');
-
-        if (empty($awsSecretKey)) {
-            $awsSecretKey = getenv('AWS_SECRET_ACCESS_KEY');
-        }
-
-        return $awsSecretKey;
     }
 
 }

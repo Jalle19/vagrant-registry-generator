@@ -40,20 +40,18 @@ Usage:
   vagrant-registry-generator [options] [--] <registryPath> <outputPath>
 
 Arguments:
-  registryPath                       The path to the Vagrant registry (e.g. s3://my-bucket/my-prefix)
-  outputPath                         The path where the output is generated (e.g. s3://my-bucket)
+  registryPath                 The path to the Vagrant registry (e.g. s3://my-bucket/my-prefix)
+  outputPath                   The path where the output is generated (e.g. s3://my-bucket)
 
 Options:
-      --awsAccessKey[=AWSACCESSKEY]  The AWS access key to use (required when using S3 paths). If not specified the value will be read from the AWS_ACCESS_KEY_ID environment variable
-      --awsSecretKey[=AWSSECRETKEY]  The AWS secret key to use (required when using S3 paths). If not specified the value will be read from the AWS_SECRET_ACCESS_KEY environment variable
-      --awsRegion[=AWSREGION]        The AWS region where your S3 bucket resides (required when using S3 paths)
-  -h, --help                         Display this help message
-  -q, --quiet                        Do not output any message
-  -V, --version                      Display this application version
-      --ansi                         Force ANSI output
-      --no-ansi                      Disable ANSI output
-  -n, --no-interaction               Do not ask any interactive question
-  -v|vv|vvv, --verbose               Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+      --awsRegion[=AWSREGION]  The AWS region where your S3 bucket resides (required when using S3 paths)
+  -h, --help                   Display this help message
+  -q, --quiet                  Do not output any message
+  -V, --version                Display this application version
+      --ansi                   Force ANSI output
+      --no-ansi                Disable ANSI output
+  -n, --no-interaction         Do not ask any interactive question
+  -v|vv|vvv, --verbose         Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 
 Help:
  Static Vagrant registry generator
@@ -61,6 +59,9 @@ Help:
 
 `registryPath` and `outputPath` should be in the form of `s3://bucket` or `s3://bucket/prefix`. You can also store the output locally 
 by passing a local path to `outputPath`, e.g. `./dist`.
+
+You must specify AWS credentials using environment variables (either `AWS_PROFILE` or a combination of 
+`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_SESSION_TOKEN`).
 
 To see what the program does, add `-vv` to the end of the command. Here's a sample of the output it produces on a 
 successful run:

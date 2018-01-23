@@ -41,7 +41,7 @@ class VagrantRegistryGenerator extends Command
             'The path where the output is generated (e.g. s3://my-bucket)');
         
         $this->addOption('awsRegion', null, InputOption::VALUE_OPTIONAL,
-            'The AWS region where your S3 bucket resides (required when using S3 paths)');
+            'The AWS region where your S3 bucket resides (required when using S3 paths). If not specified the value will be read from the AWS_REGION environment variable.');
     }
 
 

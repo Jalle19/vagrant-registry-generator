@@ -24,7 +24,7 @@ class Parser
             ->setRegistryPath($input->getArgument('registryPath'))
             ->setOutputPath(self::parseOutputPath($input))
             ->setTemplatePath(__DIR__ . '/../../templates')
-            ->setAwsRegion($input->getOption('awsRegion'));
+            ->setAwsRegion(self::parseAwsRegion($input));
 
         return $configuration;
     }
@@ -69,6 +69,22 @@ class Parser
         }
 
         return $outputPath;
+    }
+
+    /**
+     * @param InputInterface $input
+     *
+     * @return string|null
+     */
+    private static function parseAwsRegion(InputInterface $input)
+    {
+        $awsRegion = $input->getOption('awsRegion');
+
+        if (empty($awsRegion)) {
+            $awsRegion = getenv('AWS_REGION');
+        }
+
+        return $awsRegion;
     }
 
 }

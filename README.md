@@ -44,7 +44,7 @@ Arguments:
   outputPath                   The path where the output is generated (e.g. s3://my-bucket)
 
 Options:
-      --awsRegion[=AWSREGION]  The AWS region where your S3 bucket resides (required when using S3 paths)
+      --awsRegion[=AWSREGION]  The AWS region where your S3 bucket resides (required when using S3 paths). If not specified the value will be read from the AWS_REGION environment variable.
   -h, --help                   Display this help message
   -q, --quiet                  Do not output any message
   -V, --version                Display this application version

@@ -2,7 +2,6 @@
 
 namespace Jalle19\VagrantRegistryGenerator\Registry;
 
-use Jalle19\VagrantRegistryGenerator\Configuration\Configuration;
 use Jalle19\VagrantRegistryGenerator\Exception\InvalidConfigurationException;
 use Jalle19\VagrantRegistryGenerator\Exception\RegistryReadFailedException;
 use Jalle19\VagrantRegistryGenerator\Filesystem\Filesystem;
@@ -22,11 +21,6 @@ class Reader
 {
 
     /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -40,20 +34,18 @@ class Reader
     /**
      * Reader constructor.
      *
-     * @param Configuration   $configuration
      * @param LoggerInterface $logger
      * @param Filesystem      $filesystem
      *
      * @throws InvalidConfigurationException
      */
-    public function __construct(Configuration $configuration, LoggerInterface $logger, Filesystem $filesystem)
+    public function __construct(LoggerInterface $logger, Filesystem $filesystem)
     {
         // The reader can only work with remote filesystems
         if (!($filesystem instanceof RemoteFilesystem)) {
             throw new InvalidConfigurationException('The registry reader can only operate on remote filesystems');
         }
 
-        $this->configuration = $configuration;
         $this->logger        = $logger;
         $this->filesystem    = $filesystem;
     }

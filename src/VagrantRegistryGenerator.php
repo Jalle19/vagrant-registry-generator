@@ -57,7 +57,7 @@ class VagrantRegistryGenerator extends Command
         $configuration = ConfigurationParser::parseConfiguration($input);
         $logger        = $this->configureLogger($output);
 
-        $registryReader = new Reader($configuration, $logger,
+        $registryReader = new Reader($logger,
             FilesystemFactory::makeFilesystem($configuration->getRegistryPath(), $configuration));
         $registryWriter = new Writer($configuration, $logger,
             FilesystemFactory::makeFilesystem($configuration->getOutputPath(), $configuration));

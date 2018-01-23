@@ -4,3 +4,4 @@
 /composer.phar
 /box.phar
 /vagrant-registry-generator.phar
+/build/logs/clover.xml

@@ -193,9 +193,9 @@ class Configuration
     {
         if (substr($path, 0, strlen('s3://')) === 's3://') {
             return self::FILESYSTEM_TYPE_S3;
-        } else {
-            return self::FILESYSTEM_TYPE_LOCAL;
         }
+
+        return self::FILESYSTEM_TYPE_LOCAL;
     }
 
 }
